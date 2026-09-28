@@ -145,23 +145,24 @@
     <section class="section proof">
       <div class="container">
         <h2 class="reveal">Quem atende crianças sabe a diferença que faz ter o recurso certo na hora certa</h2>
-        <div class="testi-grid">
-          <figure class="testi reveal">
+        <div class="testi-grid reveal" id="testiCarousel">
+          <figure class="testi">
             <div class="stars" aria-label="5 estrelas">★★★★★</div>
             <blockquote>“Agora consigo preparar minhas sessões muito mais rápido e não fico procurando atividade de última hora.”</blockquote>
             <figcaption><span class="avatar">M</span><div><strong>Mariana</strong><small>Psicóloga Infantil</small></div></figcaption>
           </figure>
-          <figure class="testi reveal">
+          <figure class="testi">
             <div class="stars" aria-label="5 estrelas">★★★★★</div>
             <blockquote>“Ter os recursos separados por demanda facilitou muito minha rotina no consultório.”</blockquote>
             <figcaption><span class="avatar">C</span><div><strong>Camila</strong><small>Psicóloga</small></div></figcaption>
           </figure>
-          <figure class="testi reveal">
+          <figure class="testi">
             <div class="stars" aria-label="5 estrelas">★★★★★</div>
             <blockquote>“Eu ficava insegura pensando no que aplicar. Hoje consigo chegar muito mais preparada para os atendimentos.”</blockquote>
             <figcaption><span class="avatar">F</span><div><strong>Fernanda</strong><small>Psicóloga Infantil</small></div></figcaption>
           </figure>
         </div>
+        <div class="carousel-dots" id="testiDots" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -304,7 +305,13 @@
               <li>PDF pronto para imprimir</li>
               <li>Impressão ilimitada</li>
               <li>Acesso imediato</li>
-              <li>6 bônus</li>
+              <li class="gift-title">+ 6 bônus</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>Roteiro de Devolutiva para os Pais</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>Checklist “Qual Recurso Usar em Cada Demanda”</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>20 Recursos para Crianças Fechadas ou Resistentes</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>30 Perguntas Terapêuticas para Crianças</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>15 Recursos de Emoções e Regulação Emocional</li>
+              <li class="gift"><svg class="ico"><use href="#i-gift"/></svg>Guia Prático: Como Perder a Insegurança nos Primeiros Atendimentos Infantis</li>
             </ul>
 
             <div class="price">
@@ -336,8 +343,8 @@
           </svg>
         </div>
         <div>
-          <h2>Garantia Incondicional de 30 Dias</h2>
-          <p>Acesse os materiais e confira tudo por dentro. Se por qualquer motivo achar que não é para você, solicite seu reembolso dentro de 30 dias.</p>
+          <h2>Garantia Incondicional <br>de 30 Dias</h2>
+          <p>Acesse os materiais e confira tudo por dentro. Se por <b>qualquer motivo achar que não é para você, solicite seu reembolso dentro de 30 dias.</b></p>
           <p class="strong-line">Sem perguntas. Sem burocracia.</p>
         </div>
       </div>
@@ -350,7 +357,7 @@
         <div class="faq-list">
           <div class="faq-item reveal">
             <button class="faq-q" aria-expanded="false">Como recebo os materiais?<span class="plus"></span></button>
-            <div class="faq-a"><p>O acesso é digital e liberado após a confirmação da compra.</p></div>
+            <div class="faq-a"><p>O acesso é digital e liberado após a confirmação da compra. Você recebe os materiais no seu e-mail e também no seu WhatsApp.</p></div>
           </div>
           <div class="faq-item reveal">
             <button class="faq-q" aria-expanded="false">Os recursos são para quais demandas?<span class="plus"></span></button>
@@ -387,12 +394,6 @@
       <p>© <span id="year"></span> 202 Recursos Terapêuticos Infantis · Todos os direitos reservados.</p>
     </div>
   </footer>
-
-  <!-- CTA fixo no mobile -->
-  <div class="sticky-cta" id="stickyCta">
-    <div class="sticky-price"><s>R$ 97</s> <strong>R$ 27,90</strong></div>
-    <a href="#oferta" class="btn btn-cta btn-sm">Quero agora</a>
-  </div>
 
   <script src="script.js"></script>
 </body>

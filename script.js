@@ -52,6 +52,51 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(tick);
   }
 
+  // Carrossel de depoimentos (arrastar no celular/tablet + bolinhas + troca automática)
+  const track = document.getElementById('testiCarousel');
+  const dotsBox = document.getElementById('testiDots');
+  if (track && dotsBox) {
+    const slides = [...track.children];
+    const dots = slides.map((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.tabIndex = -1;
+      b.addEventListener('click', () => goTo(i));
+      dotsBox.appendChild(b);
+      return b;
+    });
+
+    const isCarousel = () => getComputedStyle(dotsBox).display !== 'none';
+    const current = () => {
+      const left = track.scrollLeft;
+      let best = 0;
+      slides.forEach((s, i) => {
+        if (Math.abs(s.offsetLeft - track.offsetLeft - left) < Math.abs(slides[best].offsetLeft - track.offsetLeft - left)) best = i;
+      });
+      return best;
+    };
+    const goTo = (i) => {
+      track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
+    };
+    const updateDots = () => {
+      const i = current();
+      dots.forEach((d, j) => d.classList.toggle('active', j === i));
+    };
+    track.addEventListener('scroll', () => requestAnimationFrame(updateDots), { passive: true });
+    updateDots();
+
+    // troca automática a cada 5s; pausa quando a pessoa toca/arrasta
+    let paused = false;
+    ['touchstart', 'pointerdown', 'mouseenter'].forEach((ev) =>
+      track.addEventListener(ev, () => { paused = true; }, { passive: true }));
+    if (!reduceMotion) {
+      setInterval(() => {
+        if (paused || !isCarousel()) return;
+        goTo((current() + 1) % slides.length);
+      }, 5000);
+    }
+  }
+
   // FAQ acordeão
   document.querySelectorAll('.faq-item').forEach((item) => {
     const btn = item.querySelector('.faq-q');
@@ -72,17 +117,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // CTA fixo no mobile: aparece depois do hero e some na seção de oferta
-  const sticky = document.getElementById('stickyCta');
-  const hero = document.querySelector('.hero');
-  const offer = document.getElementById('oferta');
-  const updateSticky = () => {
-    const pastHero = hero.getBoundingClientRect().bottom < 0;
-    const r = offer.getBoundingClientRect();
-    const onOffer = r.top < window.innerHeight && r.bottom > 0;
-    sticky.classList.toggle('show', pastHero && !onOffer);
-  };
-  window.addEventListener('scroll', updateSticky, { passive: true });
-  updateSticky();
 });
