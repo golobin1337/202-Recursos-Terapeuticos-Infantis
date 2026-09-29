@@ -96,11 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!reduceMotion) {
       setInterval(() => {
         if (hovering || Date.now() < pauseUntil || !isCarousel()) return;
-        goTo((current() + 1) % slides.length);
+        // chegou ao fim (várias imagens visíveis ao mesmo tempo)? volta para o início
+        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        goTo(atEnd ? 0 : (current() + 1) % slides.length);
       }, 4000);
     }
   };
   initCarousel(document.getElementById('printsCarousel'), document.getElementById('printsDots'));
+  initCarousel(document.getElementById('pagesCarousel'), document.getElementById('pagesDots'));
 
   // FAQ acordeão
   document.querySelectorAll('.faq-item').forEach((item) => {

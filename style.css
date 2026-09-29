@@ -201,7 +201,7 @@ a { color: inherit; }
 .cat {
   background: var(--sage-soft); border: 2px solid var(--sage-mid); border-radius: 16px;
   padding: 12px 6px; line-height: 1.2; text-align: center; font-weight: 800; color: var(--ink);
-  display: flex; flex-direction: column; align-items: center; gap: 5px; font-size: .85rem; border-radius: 14px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; hyphens: auto; gap: 5px; font-size: .85rem; border-radius: 14px;
   transition: transform .2s ease, border-color .2s ease;
 }
 .cat:hover { transform: rotate(-2deg) scale(1.03); border-color: var(--sage); }
@@ -213,6 +213,20 @@ a { color: inherit; }
   border: 1px solid var(--line); background: #111;
 }
 .print img { width: 100%; height: auto; display: block; }
+/* Carrossel de páginas do material (em todas as telas) */
+.pages-grid {
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  margin: 0 -20px; padding: 8px 20px 20px; scroll-padding: 0 20px;
+}
+.pages-grid::-webkit-scrollbar { display: none; }
+.page {
+  flex: 0 0 calc((100% - 3 * 18px) / 4); scroll-snap-align: start;
+  border-radius: 14px; overflow: hidden; background: var(--white);
+  box-shadow: var(--shadow); border: 1px solid var(--line);
+}
+.page img { width: 100%; height: auto; display: block; }
+.carousel-dots.always { display: flex; margin-bottom: 36px; }
 .carousel-dots { display: none; justify-content: center; gap: 8px; margin-top: 4px; }
 .carousel-dots button {
   width: 10px; height: 10px; border-radius: 999px; border: none; padding: 0; cursor: pointer;
@@ -483,6 +497,7 @@ a { color: inherit; }
   }
   .prints-grid::-webkit-scrollbar { display: none; }
   .prints-grid .print { flex: 0 0 min(340px, 62%); scroll-snap-align: start; }
+  .page { flex-basis: calc((100% - 2 * 18px) / 2.6); }
   .carousel-dots { display: flex; }
   .plans { grid-template-columns: 1fr; max-width: 500px; gap: 40px; }
   .plan-full, .plan-full.reveal.visible { order: -1; transform: none; }
@@ -497,10 +512,12 @@ a { color: inherit; }
   .pain-grid, .bonus-grid { grid-template-columns: 1fr; }
   .prints-grid { margin: 0 -16px; padding: 12px 16px 20px; scroll-padding: 0 16px; }
   .prints-grid .print { flex-basis: 80%; }
+  .pages-grid { margin: 0 -16px; padding: 8px 16px 20px; scroll-padding: 0 16px; gap: 12px; }
+  .page { flex-basis: 64%; }
   .pain-card { padding: 16px 18px; }
   .categories { padding: 20px 14px; }
   .cat-grid { gap: 8px; }
-  .cat { font-size: .74rem; padding: 10px 4px; }
+  .cat { font-size: .7rem; padding: 10px 3px; }
   .cat .ico { width: 20px; height: 20px; }
   .pain-close { padding: 18px 20px; }
   .receive, .bonus { border-radius: 30px; }
