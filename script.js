@@ -1,8 +1,8 @@
 // ========= Configuração =========
 // Cole aqui os links do seu checkout (Hotmart, Kiwify, Eduzz etc.)
 const CHECKOUT_URLS = {
-  completo: '#', // plano de R$ 27,90
-  basico: '#',   // plano de R$ 14,90
+  completo: 'https://mundoconhecimento.mycartpanda.com/checkout/182650613:1', // plano de R$ 27,90
+  basico: 'https://mundoconhecimento.mycartpanda.com/checkout/181538414:1', // plano de R$ 14,90
 };
 
 document.addEventListener('DOMContentLoaded', () => {
