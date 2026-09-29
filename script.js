@@ -52,11 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(tick);
   }
 
-  // Carrossel de depoimentos (arrastar no celular/tablet + bolinhas + troca automática)
-  const track = document.getElementById('testiCarousel');
-  const dotsBox = document.getElementById('testiDots');
-  if (track && dotsBox) {
+  // Carrosséis (depoimentos e prints): arrastar no celular/tablet + bolinhas + troca automática
+  const initCarousel = (track, dotsBox) => {
+    if (!track || !dotsBox) return;
     const slides = [...track.children];
+    const base = () => slides[0].offsetLeft;
+    const goTo = (i) => {
+      track.scrollTo({ left: slides[i].offsetLeft - base(), behavior: 'smooth' });
+    };
     const dots = slides.map((_, i) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -71,12 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const left = track.scrollLeft;
       let best = 0;
       slides.forEach((s, i) => {
-        if (Math.abs(s.offsetLeft - track.offsetLeft - left) < Math.abs(slides[best].offsetLeft - track.offsetLeft - left)) best = i;
+        if (Math.abs(s.offsetLeft - base() - left) < Math.abs(slides[best].offsetLeft - base() - left)) best = i;
       });
       return best;
-    };
-    const goTo = (i) => {
-      track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
     };
     const updateDots = () => {
       const i = current();
@@ -85,17 +85,22 @@ document.addEventListener('DOMContentLoaded', () => {
     track.addEventListener('scroll', () => requestAnimationFrame(updateDots), { passive: true });
     updateDots();
 
-    // troca automática a cada 5s; pausa quando a pessoa toca/arrasta
-    let paused = false;
-    ['touchstart', 'pointerdown', 'mouseenter'].forEach((ev) =>
-      track.addEventListener(ev, () => { paused = true; }, { passive: true }));
+    // troca automática a cada 4s; pausa por alguns segundos quando a pessoa toca/arrasta e depois continua
+    let pauseUntil = 0;
+    let hovering = false;
+    const pause = () => { pauseUntil = Date.now() + 6000; };
+    ['touchstart', 'pointerdown', 'wheel'].forEach((ev) =>
+      track.addEventListener(ev, pause, { passive: true }));
+    track.addEventListener('mouseenter', () => { hovering = true; });
+    track.addEventListener('mouseleave', () => { hovering = false; });
     if (!reduceMotion) {
       setInterval(() => {
-        if (paused || !isCarousel()) return;
+        if (hovering || Date.now() < pauseUntil || !isCarousel()) return;
         goTo((current() + 1) % slides.length);
-      }, 5000);
+      }, 4000);
     }
-  }
+  };
+  initCarousel(document.getElementById('printsCarousel'), document.getElementById('printsDots'));
 
   // FAQ acordeão
   document.querySelectorAll('.faq-item').forEach((item) => {
