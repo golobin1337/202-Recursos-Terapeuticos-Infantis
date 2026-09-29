@@ -52,58 +52,37 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(tick);
   }
 
-  // Carrosséis (depoimentos e prints): arrastar no celular/tablet + bolinhas + troca automática
-  const initCarousel = (track, dotsBox) => {
-    if (!track || !dotsBox) return;
-    const slides = [...track.children];
-    const base = () => slides[0].offsetLeft;
-    const goTo = (i) => {
-      track.scrollTo({ left: slides[i].offsetLeft - base(), behavior: 'smooth' });
-    };
-    const dots = slides.map((_, i) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.tabIndex = -1;
-      b.addEventListener('click', () => goTo(i));
-      dotsBox.appendChild(b);
-      return b;
+  // Carrossel infinito: duplica os itens e rola sem parar (pausa ao passar o mouse ou tocar)
+  document.querySelectorAll('.marquee').forEach((marquee) => {
+    const track = marquee.querySelector('.marquee-track');
+    const originals = [...track.children];
+    const addCopy = (items) => items.forEach((item) => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
     });
+    // repete os itens até preencherem a largura da tela, e depois duplica tudo para o loop ficar contínuo
+    while (track.scrollWidth < marquee.clientWidth) addCopy(originals);
+    addCopy([...track.children]);
 
-    const isCarousel = () => getComputedStyle(dotsBox).display !== 'none';
-    const current = () => {
-      const left = track.scrollLeft;
-      let best = 0;
-      slides.forEach((s, i) => {
-        if (Math.abs(s.offsetLeft - base() - left) < Math.abs(slides[best].offsetLeft - base() - left)) best = i;
-      });
-      return best;
+    // velocidade constante em px/s, independente da quantidade de imagens
+    const speed = Number(marquee.dataset.speed) || 40;
+    const setDuration = () => {
+      track.style.setProperty('--marquee-dur', `${track.scrollWidth / 2 / speed}s`);
     };
-    const updateDots = () => {
-      const i = current();
-      dots.forEach((d, j) => d.classList.toggle('active', j === i));
-    };
-    track.addEventListener('scroll', () => requestAnimationFrame(updateDots), { passive: true });
-    updateDots();
+    setDuration();
+    window.addEventListener('load', setDuration);
+    window.addEventListener('resize', setDuration);
 
-    // troca automática a cada 4s; pausa por alguns segundos quando a pessoa toca/arrasta e depois continua
-    let pauseUntil = 0;
-    let hovering = false;
-    const pause = () => { pauseUntil = Date.now() + 6000; };
-    ['touchstart', 'pointerdown', 'wheel'].forEach((ev) =>
-      track.addEventListener(ev, pause, { passive: true }));
-    track.addEventListener('mouseenter', () => { hovering = true; });
-    track.addEventListener('mouseleave', () => { hovering = false; });
-    if (!reduceMotion) {
-      setInterval(() => {
-        if (hovering || Date.now() < pauseUntil || !isCarousel()) return;
-        // chegou ao fim (várias imagens visíveis ao mesmo tempo)? volta para o início
-        const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-        goTo(atEnd ? 0 : (current() + 1) % slides.length);
-      }, 4000);
-    }
-  };
-  initCarousel(document.getElementById('printsCarousel'), document.getElementById('printsDots'));
-  initCarousel(document.getElementById('pagesCarousel'), document.getElementById('pagesDots'));
+    let resumeTimer;
+    marquee.addEventListener('touchstart', () => {
+      marquee.classList.add('paused');
+      clearTimeout(resumeTimer);
+    }, { passive: true });
+    marquee.addEventListener('touchend', () => {
+      resumeTimer = setTimeout(() => marquee.classList.remove('paused'), 1500);
+    }, { passive: true });
+  });
 
   // FAQ acordeão
   document.querySelectorAll('.faq-item').forEach((item) => {
