@@ -24,10 +24,11 @@ let t;
 mq.addEventListener('touchstart',()=>{mq.classList.add('paused');clearTimeout(t);},{passive:true});
 mq.addEventListener('touchend',()=>{t=setTimeout(()=>mq.classList.remove('paused'),1500);},{passive:true});
 });
-const bar=document.getElementById('stickyBuy'),valor=document.getElementById('valor'),oferta=document.getElementById('oferta');
-if(bar&&valor){
+const bar=document.getElementById('stickyBuy'),anchor=document.querySelector('.plan-full .btn-cta');
+if(bar&&anchor){
 let ticking=false;
-const upd=()=>{ticking=false;const vh=innerHeight,past=valor.getBoundingClientRect().top<vh*.85,o=oferta&&oferta.getBoundingClientRect(),onOffer=o&&o.top<vh&&o.bottom>0;bar.classList.toggle('show',past&&!onOffer);};
+// aparece depois que o botão do plano completo sai pelo topo da tela; some se a pessoa voltar acima dele
+const upd=()=>{ticking=false;bar.classList.toggle('show',anchor.getBoundingClientRect().bottom<0);};
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});
 upd();
 }
