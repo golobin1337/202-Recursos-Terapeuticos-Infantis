@@ -24,6 +24,13 @@ let t;
 mq.addEventListener('touchstart',()=>{mq.classList.add('paused');clearTimeout(t);},{passive:true});
 mq.addEventListener('touchend',()=>{t=setTimeout(()=>mq.classList.remove('paused'),1500);},{passive:true});
 });
+const bar=document.getElementById('stickyBuy'),valor=document.getElementById('valor'),oferta=document.getElementById('oferta');
+if(bar&&valor){
+let ticking=false;
+const upd=()=>{ticking=false;const vh=innerHeight,past=valor.getBoundingClientRect().top<vh*.85,o=oferta&&oferta.getBoundingClientRect(),onOffer=o&&o.top<vh&&o.bottom>0;bar.classList.toggle('show',past&&!onOffer);};
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});
+upd();
+}
 document.querySelectorAll('.faq-item').forEach(item=>{
 const btn=item.querySelector('.faq-q'),ans=item.querySelector('.faq-a');
 btn.addEventListener('click',()=>{
