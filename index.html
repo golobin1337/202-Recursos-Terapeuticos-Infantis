@@ -23,7 +23,7 @@
 .footer{padding-bottom:90px}
 @media (min-width:641px){.sb-info span{display:block}.sb-info b{display:inline;margin-left:4px}}
 /* Popup de oferta ao clicar no plano básico */
-.downsell{border:none;padding:0;background:transparent;max-width:440px;width:calc(100% - 28px);margin:auto;overflow:visible}
+.downsell{border:none;padding:0;background:transparent;max-width:440px;width:calc(100% - 28px);margin:auto;max-height:calc(100dvh - 20px);overflow:auto;border-radius:24px}
 .downsell::backdrop{background:rgba(31,43,35,.62)}
 .downsell[open]{animation:ds-in .3s ease}
 @keyframes ds-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
@@ -32,10 +32,16 @@
 .ds-tag{display:inline-block;background:var(--sand);color:var(--ink);font-weight:800;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:12px}
 .ds-card h3{font-size:1.45rem;line-height:1.2;margin-bottom:8px;outline:none}
 .ds-sub{color:var(--muted);font-size:.95rem;margin-bottom:12px}
-.ds-img{width:100%;height:auto;display:block;margin:0 auto 12px;max-width:320px}
-.ds-list{list-style:none;text-align:left;display:grid;gap:7px;margin:0 auto 16px;max-width:300px}
+.ds-img{width:100%;height:auto;display:block;margin:0 auto 12px;max-width:260px}
+.ds-list{list-style:none;text-align:left;display:grid;gap:7px;margin:0 auto 12px;max-width:320px}
 .ds-list li{position:relative;padding-left:30px;font-weight:700;color:var(--ink);font-size:.95rem}
 .ds-list li::before{content:"✓";position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--sage-soft);color:var(--cta);display:grid;place-items:center;font-size:.75rem;font-weight:800}
+.ds-gifts{text-align:left;background:var(--beige);border:1.5px dashed var(--sand);border-radius:14px;padding:12px 14px 8px;margin:0 auto 16px;max-width:360px}
+.ds-gifts-title{display:flex;align-items:center;gap:7px;font-weight:800;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-dark);margin-bottom:6px}
+.ds-gifts-title .ico{width:18px;height:18px}
+.ds-gifts ol{margin:0;padding-left:20px;display:grid;gap:5px}
+.ds-gifts li{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.35;padding-left:2px}
+.ds-gifts li::marker{color:var(--sage-dark);font-weight:800}
 .ds-price{margin-bottom:16px}
 .ds-price .from{color:var(--muted);font-weight:700;font-size:.95rem}
 .ds-price .from s{text-decoration-thickness:2px}
@@ -43,7 +49,8 @@
 .ds-price .now small{font-size:1.2rem;vertical-align:top;margin-right:3px;position:relative;top:9px}
 .ds-price .now span{font-size:1.6rem}
 .ds-card .btn-cta{width:100%;padding:17px 18px;font-size:1rem}
-.ds-no{display:block;margin-top:14px;color:var(--muted);font-size:.88rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}</style>
+.ds-no{display:block;margin-top:14px;color:var(--muted);font-size:.88rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px),(max-height:860px){.ds-img{display:none}.ds-card{padding:22px 16px 16px}.ds-tag{margin-bottom:8px}.ds-card h3{font-size:1.25rem;margin-bottom:4px}.ds-sub{font-size:.88rem;margin-bottom:10px}.ds-list{gap:5px;margin-bottom:10px}.ds-gifts{margin-bottom:12px;padding:10px 12px 6px}.ds-gifts li{font-size:.82rem}.ds-price{margin-bottom:12px}.ds-price .now{font-size:2.7rem}.ds-card .btn-cta{padding:15px 14px;font-size:.92rem}.ds-no{margin-top:10px}}</style>
 
   <script type="text/javascript">
     __afterLoad(function(){(function(c,l,a,r,i,t,y){
@@ -342,7 +349,7 @@
               <p class="now"><small>R$</small>10</p>
             </div>
 
-            <a href="https://pay.wiapy.com/qN2pvxGVqrxl" class="btn btn-outline btn-block checkout-link" data-plan="basico">QUERO O PLANO BÁSICO →</a>
+            <a href="https://pay.wiapy.com/qN2pvxGVqrxl" class="btn btn-outline btn-block checkout-link" data-plan="basico" onclick="var d=document.getElementById('downsell');if(d&&d.showModal){d.showModal();return false}">QUERO O PLANO BÁSICO →</a>
             <p class="once-basic">Pagamento único.</p>
             <p class="secure"><svg class="ico"><use href="#i-lock"/></svg> Pagamento seguro · <svg class="ico"><use href="#i-bolt"/></svg> Acesso imediato</p>
           </div>
@@ -467,9 +474,19 @@
       <img class="ds-img" src="assets/hero-480.webp" width="480" height="311" alt="202 Recursos Terapêuticos Infantis e os 6 bônus" loading="lazy" decoding="async">
       <ul class="ds-list">
         <li>202 recursos (em vez de 65)</li>
-        <li>+ 6 bônus inclusos</li>
         <li>Impressão ilimitada</li>
       </ul>
+      <div class="ds-gifts">
+        <p class="ds-gifts-title"><svg class="ico"><use href="#i-gift"/></svg>+ 6 bônus inclusos</p>
+        <ol>
+          <li>Roteiro de Devolutiva para os Pais</li>
+          <li>Checklist “Qual Recurso Usar em Cada Demanda”</li>
+          <li>20 Recursos para Crianças Fechadas ou Resistentes</li>
+          <li>30 Perguntas Terapêuticas para Crianças</li>
+          <li>15 Recursos de Emoções e Regulação Emocional</li>
+          <li>Guia Prático: Como Perder a Insegurança nos Primeiros Atendimentos Infantis</li>
+        </ol>
+      </div>
       <div class="ds-price">
         <p class="from">De <s>R$ 19,90</s> por apenas</p>
         <p class="now"><small>R$</small>15<span>,90</span></p>
@@ -488,6 +505,6 @@
     <a href="https://pay.wiapy.com/loVNq_pP4odZ" class="sb-btn checkout-link">QUERO AGORA</a>
   </div>
 
-  <script src="script.js?v=6" defer></script>
+  <script src="script.js?v=7" defer></script>
 </body>
 </html>
