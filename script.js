@@ -32,6 +32,14 @@ const upd=()=>{ticking=false;bar.classList.toggle('show',anchor.getBoundingClien
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});
 upd();
 }
+// popup de oferta: o primeiro clique no plano básico abre a oferta do completo em vez de ir direto ao checkout
+const ds=document.getElementById('downsell'),basic=document.querySelector('[data-plan="basico"]');
+if(ds&&basic&&ds.showModal){
+let shown=false;
+basic.addEventListener('click',e=>{if(shown)return;e.preventDefault();shown=true;ds.showModal();});
+ds.querySelector('.ds-close').addEventListener('click',()=>ds.close());
+ds.addEventListener('click',e=>{if(e.target===ds)ds.close();});
+}
 document.querySelectorAll('.faq-item').forEach(item=>{
 const btn=item.querySelector('.faq-q'),ans=item.querySelector('.faq-a');
 btn.addEventListener('click',()=>{

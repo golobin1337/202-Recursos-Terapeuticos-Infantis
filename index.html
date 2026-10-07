@@ -21,7 +21,29 @@
 .sb-btn{flex:none;text-decoration:none;font-weight:800;font-size:.8rem;letter-spacing:.02em;color:var(--ink);background:linear-gradient(180deg,#F1E6CF 0%,var(--sand) 100%);padding:11px 16px;border-radius:999px;box-shadow:0 3px 0 #C9B68F;transition:transform .2s ease}
 .sb-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #C9B68F}
 .footer{padding-bottom:90px}
-@media (min-width:641px){.sb-info span{display:block}.sb-info b{display:inline;margin-left:4px}}</style>
+@media (min-width:641px){.sb-info span{display:block}.sb-info b{display:inline;margin-left:4px}}
+/* Popup de oferta ao clicar no plano básico */
+.downsell{border:none;padding:0;background:transparent;max-width:440px;width:calc(100% - 28px);margin:auto;overflow:visible}
+.downsell::backdrop{background:rgba(31,43,35,.62)}
+.downsell[open]{animation:ds-in .3s ease}
+@keyframes ds-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.ds-card{position:relative;background:var(--white);border:4px solid var(--sand);border-radius:24px;padding:30px 22px 22px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.ds-close{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:none;background:var(--beige);color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer}
+.ds-tag{display:inline-block;background:var(--sand);color:var(--ink);font-weight:800;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:999px;margin-bottom:12px}
+.ds-card h3{font-size:1.45rem;line-height:1.2;margin-bottom:8px;outline:none}
+.ds-sub{color:var(--muted);font-size:.95rem;margin-bottom:12px}
+.ds-img{width:100%;height:auto;display:block;margin:0 auto 12px;max-width:320px}
+.ds-list{list-style:none;text-align:left;display:grid;gap:7px;margin:0 auto 16px;max-width:300px}
+.ds-list li{position:relative;padding-left:30px;font-weight:700;color:var(--ink);font-size:.95rem}
+.ds-list li::before{content:"✓";position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--sage-soft);color:var(--cta);display:grid;place-items:center;font-size:.75rem;font-weight:800}
+.ds-price{margin-bottom:16px}
+.ds-price .from{color:var(--muted);font-weight:700;font-size:.95rem}
+.ds-price .from s{text-decoration-thickness:2px}
+.ds-price .now{font-family:'Baloo 2',sans-serif;font-weight:800;color:var(--cta);font-size:3.2rem;line-height:1;margin-top:4px}
+.ds-price .now small{font-size:1.2rem;vertical-align:top;margin-right:3px;position:relative;top:9px}
+.ds-price .now span{font-size:1.6rem}
+.ds-card .btn-cta{width:100%;padding:17px 18px;font-size:1rem}
+.ds-no{display:block;margin-top:14px;color:var(--muted);font-size:.88rem;font-weight:700;text-decoration:underline;text-underline-offset:3px}</style>
 
   <script type="text/javascript">
     __afterLoad(function(){(function(c,l,a,r,i,t,y){
@@ -435,6 +457,28 @@
     </div>
   </footer>
 
+  <!-- Popup de oferta: aparece ao clicar no plano básico (R$ 10) -->
+  <dialog class="downsell" id="downsell" aria-labelledby="dsTitle">
+    <div class="ds-card">
+      <button type="button" class="ds-close" aria-label="Fechar">×</button>
+      <span class="ds-tag">Espera! Oferta especial</span>
+      <h3 id="dsTitle" tabindex="-1" autofocus>Leve o Plano Completo com desconto</h3>
+      <p class="ds-sub">Por só R$ 5,90 a mais que o básico, você leva tudo:</p>
+      <img class="ds-img" src="assets/hero-480.webp" width="480" height="311" alt="202 Recursos Terapêuticos Infantis e os 6 bônus" loading="lazy" decoding="async">
+      <ul class="ds-list">
+        <li>202 recursos (em vez de 65)</li>
+        <li>+ 6 bônus inclusos</li>
+        <li>Impressão ilimitada</li>
+      </ul>
+      <div class="ds-price">
+        <p class="from">De <s>R$ 19,90</s> por apenas</p>
+        <p class="now"><small>R$</small>15<span>,90</span></p>
+      </div>
+      <a href="https://pay.wiapy.com/2K_2-a0QTdef" class="btn btn-cta checkout-link">SIM, QUERO O COMPLETO POR R$ 15,90</a>
+      <a href="https://pay.wiapy.com/qN2pvxGVqrxl" class="ds-no checkout-link">Não, quero só o básico por R$ 10</a>
+    </div>
+  </dialog>
+
   <!-- Barra fixa de compra -->
   <div class="sticky-buy" id="stickyBuy">
     <div class="sb-info">
@@ -444,6 +488,6 @@
     <a href="https://pay.wiapy.com/loVNq_pP4odZ" class="sb-btn checkout-link">QUERO AGORA</a>
   </div>
 
-  <script src="script.js?v=5" defer></script>
+  <script src="script.js?v=6" defer></script>
 </body>
 </html>
