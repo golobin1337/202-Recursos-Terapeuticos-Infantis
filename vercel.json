@@ -2,7 +2,28 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/((?!bloqueado).*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(HTTrack|httrack|Wget|wget|WebCopier|WebZIP|Web Downloader|Offline Explorer|Teleport|SiteSucker|WebReaper|WebStripper|WebSauger|WebWhacker|WebCapture|Website Downloader|SiteSnagger|BlackWidow|Scrapy|scrapy|python-requests|Python-urllib|aiohttp|libwww-perl|PhantomJS).*"
+        }
+      ],
+      "destination": "/bloqueado",
+      "permanent": false
+    }
+  ],
   "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self'" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    },
     {
       "source": "/(.*)\\.(css|js)",
       "headers": [
